@@ -1,4 +1,4 @@
-plugins {
+	plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -6,6 +6,8 @@ plugins {
 }
 
 android {
+
+    ndkVersion = "27.0.12077973"
     namespace = "com.example.spotify"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
