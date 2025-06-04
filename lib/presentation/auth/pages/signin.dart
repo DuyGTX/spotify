@@ -69,7 +69,7 @@ class SigninPage extends StatelessWidget {
   Widget _passwordField(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
-        hintText: 'PassWrd'
+        hintText: 'Password'
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme
       ),
