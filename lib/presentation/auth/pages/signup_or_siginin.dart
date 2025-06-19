@@ -18,7 +18,7 @@ class SignupOrSighinPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const BasicAppBar(),
+          const BasicAppbar(),
           Align(
             alignment: Alignment.topRight,
             child: SvgPicture.asset(
@@ -87,11 +87,11 @@ class SignupOrSighinPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => const SignupPage()
+                                builder: (BuildContext context) => SignupPage()
                               )
                             );
                           },
-                          tittle: 'Register'
+                          title: 'Register'
                          ),
                       ),
                       const SizedBox(width: 20,),
@@ -102,7 +102,7 @@ class SignupOrSighinPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => const SigninPage()
+                                builder: (BuildContext context) => SigninPage()
                               )
                             );
                           },
@@ -111,7 +111,7 @@ class SignupOrSighinPage extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: context.IsDarkMode ? Colors.white : Colors.black 
+                              color: context.isDarkMode ? Colors.white : Colors.black 
                             ),
                             ),
                           ),

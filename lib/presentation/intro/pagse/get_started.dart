@@ -75,7 +75,7 @@ class GetStartedPage extends StatelessWidget{
                         )
                       );
                     }, 
-                    tittle: 'Get Started'
+                    title: 'Get Started'
                   )
                 ],
               ),

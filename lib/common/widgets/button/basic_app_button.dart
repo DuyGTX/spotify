@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 
-class BasicAppButton extends StatelessWidget{
+class BasicAppButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String tittle;
+  final String title;
   final double ? height;
-  const BasicAppButton ({
+  const BasicAppButton({
     required this.onPressed,
-    required this.tittle,
+    required this.title,
     this.height,
     super.key
   });
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        minimumSize: Size.fromHeight( height ?? 80)
+        minimumSize: Size.fromHeight(height ?? 80),
       ),
       child: Text(
-        tittle
-      ),
+        title
+      )
     );
-  } 
+  }
 }
