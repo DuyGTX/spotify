@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
+import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/data/models/auth/signin_user_req.dart';
 import 'package:spotify/domain/usecases/auth/signin.dart';
 import 'package:spotify/presentation/auth/pages/signup.dart';
-import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/service_locator.dart';
 
 class SigninPage extends StatelessWidget {
@@ -21,8 +22,8 @@ class SigninPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: _signupText(context),
       appBar: BasicAppbar(
-        title: SvgPicture.asset(
-          AppVectors.logo,
+        title: Image.asset(
+          AppImages.logo,
           height: 40,
           width: 40,
         ),
@@ -57,7 +58,7 @@ class SigninPage extends StatelessWidget {
                     // Nếu r là thông báo thành công (từ Right), điều hướng đến trang chủ
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (BuildContext context) => const RootPage()),
+                      MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
                       (route) => false,
                     );
                   },

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
+import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/data/models/auth/create_user_req.dart';
 import 'package:spotify/domain/usecases/auth/signup.dart';
 import 'package:spotify/presentation/auth/pages/signin.dart';
-import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/service_locator.dart';
 
 class SignupPage extends StatefulWidget {
@@ -35,8 +36,8 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       bottomNavigationBar: _siginText(context),
       appBar: BasicAppbar(
-        title: SvgPicture.asset(
-          AppVectors.logo,
+        title: Image.asset(
+                    AppImages.logo,
           height: 40,
           width: 40,
         ),
@@ -72,7 +73,7 @@ class _SignupPageState extends State<SignupPage> {
                   (r) {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (BuildContext context) => const RootPage()),
+                      MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
                       (route) => false,
                     );
                   },

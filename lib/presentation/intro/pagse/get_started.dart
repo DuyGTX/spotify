@@ -19,19 +19,9 @@ class GetStartedPage extends StatelessWidget{
               vertical: 45,
               horizontal: 45
             ),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image:AssetImage(
-                  AppImages.introBG,
-                )
-                 )
-            ),
+            
           ),
 
-          Container(
-            color: Colors.black.withOpacity(0.15), 
-          ),
           
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -42,26 +32,26 @@ class GetStartedPage extends StatelessWidget{
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: SvgPicture.asset( 
-                      AppVectors.logo
+                    child: Image.asset(
+                    AppImages.logo
                      ),
                   ),
                   Spacer(),
                   Text(
-                    'Enjoy Listening To Music',
+                    'Trải nghiệm âm nhạc đỉnh cao',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 18
+                      color: Colors.black,
+                      fontSize: 25
                     ),
                   ),
                   SizedBox(height: 21,),
                   Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis enim purus sed phasellus. Cursus ornare id scelerisque aliquam.',
+                    'Thưởng thức âm thanh chất lượng cao, tạo danh sách cá nhân và khám phá xu hướng mới nhất và hoàn toàn MIỄN PHÍ',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: AppColors.grey,
-                      fontSize: 13
+                      fontSize: 17
                     ),
                     textAlign: TextAlign.center,
                   ),
