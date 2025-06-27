@@ -25,7 +25,7 @@ class SigninPage extends StatelessWidget {
         title: Image.asset(
           AppImages.logo,
           height: 40,
-          width: 40,
+          width: 150,
         ),
       ),
       body: SingleChildScrollView(

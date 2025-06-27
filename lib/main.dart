@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
+import 'package:spotify/presentation/auth/pages/signup.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
-import 'package:spotify/presentation/home/widgets/test.dart';
 
-
+import 'package:spotify/presentation/song_player/bloc/mini_player_cubit.dart';
+import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
+import 'package:spotify/presentation/song_player/pages/song_player.dart';
 import 'package:spotify/presentation/splash/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:spotify/service_locator.dart';
@@ -20,11 +22,10 @@ Future<void> main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-// Khởi tạo Supabase
+  );
   await Supabase.initialize(
-    url: 'https://weqbsgrtipzvyrfkaolv.supabase.co',  // Thay thế bằng URL của bạn
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlcWJzZ3J0aXB6dnlyZmthb2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMjMwMzMsImV4cCI6MjA2NTg5OTAzM30.nY45CKXRg3vpUf1G6xQClXcFjDyyiuG-3JNic_Z42AM',  // Thay thế bằng anon key của bạn
+    url: 'https://weqbsgrtipzvyrfkaolv.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlcWJzZ3J0aXB6dnlyZmthb2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMjMwMzMsImV4cCI6MjA2NTg5OTAzM30.nY45CKXRg3vpUf1G6xQClXcFjDyyiuG-3JNic_Z42AM',
   );
   await initializeDependencies();
   HydratedBloc.storage = await HydratedStorage.build(
@@ -42,15 +43,16 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ThemeCubit())
+        BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider<SongPlayerCubit>(create: (_) => SongPlayerCubit()), 
       ],
-      child: BlocBuilder<ThemeCubit,ThemeMode>(
-        builder: (context,mode) => MaterialApp(
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, mode) => MaterialApp(
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           debugShowCheckedModeBanner: false,
-          home: const SplashPage()
+          home: const HomePage(),
         ),
       ),
     );

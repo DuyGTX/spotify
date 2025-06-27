@@ -4,6 +4,8 @@ import 'package:spotify/domain/usecases/song/get_trending.dart';
 import 'package:spotify/presentation/home/bloc/trending_song_cubit.dart';
 import 'package:spotify/presentation/home/bloc/trending_song_state.dart';
 import 'package:spotify/domain/entities/song/song.dart';
+import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
+import 'package:spotify/presentation/song_player/pages/song_player.dart';
 import 'package:spotify/service_locator.dart';
 
 class TrendingSong extends StatelessWidget {
@@ -19,7 +21,7 @@ class TrendingSong extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is TrendingSongLoaded) {
-            return _buildPagedGrid(state.songs);
+            return _buildPagedGrid(context, state.songs);
           }
           return const Center(child: Text('Không có dữ liệu.'));
         },
@@ -27,7 +29,7 @@ class TrendingSong extends StatelessWidget {
     );
   }
 
-  Widget _buildPagedGrid(List<SongEntity> songs) {
+  Widget _buildPagedGrid(BuildContext context, List<SongEntity> songs) {
     final pages = <List<SongEntity>>[];
 
     for (int i = 0; i < songs.length; i += 4) {
@@ -35,7 +37,7 @@ class TrendingSong extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 340, // 4 items height + spacing
+      height: 340,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -43,48 +45,67 @@ class TrendingSong extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 20),
         itemBuilder: (context, pageIndex) {
           final page = pages[pageIndex];
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(page.length, (songIndex) {
-              final song = page[songIndex];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        song.coverImage,
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.cover,
+              final globalIndex = pageIndex * 4 + songIndex;
+              final song = songs[globalIndex];
+
+              return GestureDetector(
+                onTap: () {
+                  // final cubit = context.read<SongPlayerCubit>();
+                  // cubit.loadSong(song.songUrl, song, songs, index);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SongPlayerPage(
+                        songEntity: song,
+                        allSongs: songs,
+                        currentIndex: globalIndex,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          song.songName,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          song.coverImage,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          song.artist,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                      ),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            song.songName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 4),
+                          Text(
+                            song.artist,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             }),
