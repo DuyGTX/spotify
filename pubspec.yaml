@@ -20,6 +20,10 @@ dependencies:
   dartz: ^0.10.1
   supabase_flutter: ^2.9.1
   just_audio: ^0.10.4
+  iconsax: ^0.0.8
+  cached_network_image: ^3.4.1
+  palette_generator:
+  
   
 
 dev_dependencies:

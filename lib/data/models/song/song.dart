@@ -10,6 +10,8 @@ class SongModel {
   final String songUrl;
   final String coverImage;
   final String album;
+  final String lyrics; // ✅ mới
+  final String lyricsLrc;
 
   SongModel({
     required this.id,
@@ -21,6 +23,9 @@ class SongModel {
     required this.songUrl,
     required this.coverImage,
     required this.album,
+    required this.lyrics,
+    required this.lyricsLrc,
+    
   });
 
   factory SongModel.fromJson(Map<String, dynamic> data) {
@@ -34,6 +39,9 @@ class SongModel {
       songUrl: data['song_url'] ?? '',
       coverImage: data['cover_image'] ?? '',
       album: data['album'] ?? '',
+      lyrics: data['lyrics'] ?? '', // ✅ mới
+      lyricsLrc: data['lyrics_lrc'] ?? '',
+
     );
   }
 
@@ -61,6 +69,8 @@ extension SongModelX on SongModel {
       songUrl: songUrl,
       coverImage: coverImage,
       album: album,
+      lyrics: lyrics, // ✅ mới
+      lyricsLrc: lyricsLrc, // ✅ mới
     );
   }
 }

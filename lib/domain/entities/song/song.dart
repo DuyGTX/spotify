@@ -8,6 +8,8 @@ class SongEntity {
   final String songUrl;
   final String coverImage;
   final String album;
+  final String lyrics;      // lời thuần
+  final String lyricsLrc;   // lời LRC đồng bộ
 
   SongEntity({
     required this.id,
@@ -19,5 +21,7 @@ class SongEntity {
     required this.songUrl,
     required this.coverImage,
     required this.album,
+    required this.lyrics,
+    required this.lyricsLrc,  // ✅ thêm dòng này
   });
 }

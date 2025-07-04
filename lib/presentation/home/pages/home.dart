@@ -5,8 +5,10 @@ import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
+import 'package:spotify/presentation/dashboard/custom_bottom_nav_bar.dart';
 import 'package:spotify/presentation/home/widgets/outstanding_song.dart';
 import 'package:spotify/presentation/home/widgets/trending_song.dart';
+import 'package:spotify/presentation/song_player/pages/mini_player_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  int _selectedBottomIndex = 0;
 
   @override
   void initState() {
@@ -30,6 +33,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
+  void _onBottomNavTap(int index) {
+    setState(() {
+      _selectedBottomIndex = index;
+    });
+    // TODO: Sau này chuyển sang các trang khác theo index
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -62,6 +71,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             ),
           ],
         ),
+        bottomNavigationBar: Column(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    const MiniPlayerView(),
+    AppBottomNavigationBar(
+      currentIndex: _selectedBottomIndex,
+      onTap: _onBottomNavTap,
+    ),
+  ],
+),
+
       ),
     );
   }
