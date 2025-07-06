@@ -23,7 +23,8 @@ dependencies:
   iconsax: ^0.0.8
   cached_network_image: ^3.4.1
   palette_generator:
-  
+  equatable: ^2.0.7
+  diacritic: ^0.1.6
   
 
 dev_dependencies:

@@ -95,7 +95,7 @@ class TrendingSong extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            song.artist,
+                            song.artistName,
                             style: const TextStyle(
                               fontSize: 12,
                               color: Colors.grey,

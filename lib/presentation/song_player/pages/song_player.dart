@@ -32,13 +32,15 @@ class SongPlayerPage extends StatelessWidget {
           icon: const Icon(Icons.more_vert_rounded),
         ),
       ),
+      // BlocProvider.value để nhận đúng instance cubit dùng toàn app (mini player)
       body: BlocProvider.value(
         value: context.read<SongPlayerCubit>(),
         child: Builder(
           builder: (context) {
+            // Đảm bảo mỗi lần mở, luôn load lại bài hát nếu khác ID!
             WidgetsBinding.instance.addPostFrameCallback((_) {
               final cubit = context.read<SongPlayerCubit>();
-              if (!cubit.isSongLoaded || cubit.currentSong?.id != songEntity.id) {
+              if (cubit.currentSong == null || cubit.currentSong?.id != songEntity.id) {
                 cubit.loadSong(songEntity.songUrl, songEntity, allSongs, currentIndex);
               }
             });
@@ -46,13 +48,10 @@ class SongPlayerPage extends StatelessWidget {
             return BlocBuilder<SongPlayerCubit, SongPlayerState>(
               builder: (context, state) {
                 final cubit = context.read<SongPlayerCubit>();
-
                 if (cubit.currentSong == null) {
                   return const Center(child: CircularProgressIndicator());
                 }
-
                 final song = cubit.currentSong!;
-
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   child: Column(
@@ -104,7 +103,7 @@ class SongPlayerPage extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              song.artist,
+              song.artistName,
               style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
             ),
           ],
@@ -222,7 +221,7 @@ class SongPlayerPage extends StatelessWidget {
           final idx = e.indexOf(']');
           return idx != -1 ? e.substring(idx + 1).trim() : e.trim();
         }).where((e) => e.isNotEmpty).take(5).join('\n')
-      : (song.lyrics.isNotEmpty ? song.lyrics.split('\n').take(5).join('\n') : 'Không có lời bài hát');
+      : (song.lyrics.isNotEmpty ? song.lyrics.split('\n').take(5).join('\n') : 'Lời bài hát đang được cập nhật');
 
   return Container(
     padding: const EdgeInsets.all(16),
@@ -270,7 +269,7 @@ class SongPlayerPage extends StatelessWidget {
                 'Xem tất cả',
                 style: TextStyle(
                   color: Colors.white,
-                  decoration: TextDecoration.underline,
+                  
                 ),
               ),
             ),

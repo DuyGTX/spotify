@@ -11,9 +11,13 @@ class SongRepositoryImpl extends SongRepository {
     return sl<SongSupaBaseService>().getOutstandingSongs();
   }
 
-
   @override
   Future<Either<Exception, List<SongEntity>>> getTrendingSongs() {
     return sl<SongSupaBaseService>().getTrendingSongs();
+  }
+
+  @override
+  Future<Either<Exception, List<SongEntity>>> getSongsByAlbumId(int albumId) {
+    return sl<SongSupaBaseService>().getSongsByAlbumId(albumId);
   }
 }

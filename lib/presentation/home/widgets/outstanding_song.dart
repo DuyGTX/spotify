@@ -106,7 +106,7 @@ class Outstanding extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      song.artist,
+                      song.artistName,
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,

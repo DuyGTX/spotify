@@ -138,7 +138,7 @@ class _MiniPlayerViewState extends State<MiniPlayerView> {
                         ),
                       ),
                       subtitle: Text(
-                        song.artist,
+                        song.artistName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

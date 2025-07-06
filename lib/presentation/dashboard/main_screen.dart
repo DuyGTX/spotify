@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotify/presentation/dashboard/custom_bottom_nav_bar.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
+import 'package:spotify/presentation/search/pages/search_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,10 +15,12 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    // const SearchPage(),
-    // const LibraryPage(),
-    // const ProfilePage(),
+    const SearchPage(),
+    Placeholder(),
+    Placeholder(),
   ];
+
+
 
   void _onBottomNavTap(int index) {
     setState(() {
@@ -34,5 +37,6 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onBottomNavTap,
       ),
     );
+
   }
 }

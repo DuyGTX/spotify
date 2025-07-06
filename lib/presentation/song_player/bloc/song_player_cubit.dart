@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:spotify/core/configs/assets/color_utils.dart';
 import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_state.dart';
 
+
+  
 class SongPlayerCubit extends Cubit<SongPlayerState> {
   final AudioPlayer audioPlayer = AudioPlayer();
   final List<int> _historyStack = []; // Lịch sử
@@ -41,6 +45,7 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
     emit(SongPlayerLoaded());
   }
 
+  
   Future<void> loadSong(
     String url,
     SongEntity song,
@@ -56,11 +61,15 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
     allSongs = all;
     currentIndex = index;
 
+    // Thêm đoạn này!
+    dominantColor = await fetchDominantColor(song.coverImage);
+
     await audioPlayer.setUrl(url);
     await audioPlayer.play();
     isSongLoaded = true;
     emit(SongPlayerLoaded());
   }
+
 
   void playOrPauseSong() {
     if (audioPlayer.playing) {

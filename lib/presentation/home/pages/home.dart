@@ -7,6 +7,7 @@ import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/presentation/dashboard/custom_bottom_nav_bar.dart';
 import 'package:spotify/presentation/home/widgets/outstanding_song.dart';
+import 'package:spotify/presentation/home/widgets/trending_album.dart';
 import 'package:spotify/presentation/home/widgets/trending_song.dart';
 import 'package:spotify/presentation/song_player/pages/mini_player_view.dart';
 
@@ -71,16 +72,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             ),
           ],
         ),
-        bottomNavigationBar: Column(
-  mainAxisSize: MainAxisSize.min,
-  children: [
-    const MiniPlayerView(),
-    AppBottomNavigationBar(
-      currentIndex: _selectedBottomIndex,
-      onTap: _onBottomNavTap,
-    ),
-  ],
-),
+        bottomNavigationBar: const MiniPlayerView(),
+
 
       ),
     );
@@ -136,32 +129,48 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   // Tab "Tất Cả"
   Widget _tabAll() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(height: 16),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Được đề xuất cho hôm nay',
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
-            ),
+  return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        SizedBox(height: 16),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Được đề xuất cho hôm nay',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
           ),
-          Outstanding(),
-          Padding(
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
-            child: Text(
-              'Bài hát thịnh hành',
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-            ),
+        ),
+
+        Outstanding(),
+
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
+          child: Text(
+            'Bài hát thịnh hành',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
           ),
-          TrendingSong(),
-          SizedBox(height: 32),
-        ],
-      ),
-    );
-  }
+        ),
+
+        TrendingSong(),
+
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
+          child: Text(
+            'Album thịnh hành',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+          ),
+        ),
+        TrendingAlbum(),
+
+
+        SizedBox(height: 32),
+      ],
+    ),
+  );
+}
+
 
   // Tab "Nhạc"
   Widget _tabMusic() {
@@ -177,4 +186,5 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget _tabPodcasts() {
     return const Center(child: Text('Nội dung Podcasts'));
   }
+ 
 }

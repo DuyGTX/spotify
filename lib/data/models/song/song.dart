@@ -3,57 +3,48 @@ import 'package:spotify/domain/entities/song/song.dart';
 class SongModel {
   final int id;
   final String songName;
-  final String artist;
   final int duration;
   final DateTime releaseDate;
   final String genre;
   final String songUrl;
   final String coverImage;
-  final String album;
-  final String lyrics; // ✅ mới
+  final String lyrics;
   final String lyricsLrc;
+  final String artistName;
+  final int artistId;
+  final int albumId;
 
   SongModel({
     required this.id,
     required this.songName,
-    required this.artist,
     required this.duration,
     required this.releaseDate,
     required this.genre,
     required this.songUrl,
     required this.coverImage,
-    required this.album,
     required this.lyrics,
     required this.lyricsLrc,
-    
+    required this.artistId,
+    required this.albumId,
+    required this.artistName,
   });
 
   factory SongModel.fromJson(Map<String, dynamic> data) {
     return SongModel(
       id: data['id'] ?? 0,
       songName: data['song_name'] ?? '',
-      artist: data['artist'] ?? '',
       duration: data['duration'] ?? 0,
-      releaseDate: _parseDate(data['release_date']),
+      releaseDate: DateTime.tryParse(data['release_date'] ?? '') ?? DateTime(2000),
       genre: data['genre'] ?? '',
       songUrl: data['song_url'] ?? '',
       coverImage: data['cover_image'] ?? '',
-      album: data['album'] ?? '',
-      lyrics: data['lyrics'] ?? '', // ✅ mới
+      lyrics: data['lyrics'] ?? '',
       lyricsLrc: data['lyrics_lrc'] ?? '',
+      artistId: data['artist_id'] ?? 0,
+      albumId: data['album_id'] ?? 0,
+      artistName: (data['Artists'] != null ? data['Artists']['name'] : '') ?? '',
 
     );
-  }
-
-  static DateTime _parseDate(dynamic value) {
-    if (value is String) {
-      try {
-        return DateTime.parse(value);
-      } catch (_) {
-        return DateTime(2000);
-      }
-    }
-    return DateTime(2000);
   }
 }
 
@@ -62,15 +53,16 @@ extension SongModelX on SongModel {
     return SongEntity(
       id: id,
       songName: songName,
-      artist: artist,
       duration: duration,
       releaseDate: releaseDate,
       genre: genre,
       songUrl: songUrl,
       coverImage: coverImage,
-      album: album,
-      lyrics: lyrics, // ✅ mới
-      lyricsLrc: lyricsLrc, // ✅ mới
+      lyrics: lyrics,
+      lyricsLrc: lyricsLrc,
+      artistId: artistId,
+      albumId: albumId,
+      artistName: artistName,
     );
   }
 }
