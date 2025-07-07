@@ -4,19 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
-import 'package:spotify/presentation/auth/pages/signup.dart';
+import 'package:spotify/presentation/auth/pages/signin.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/dashboard/main_screen.dart';
-import 'package:spotify/presentation/home/pages/home.dart';
-
-import 'package:spotify/presentation/song_player/bloc/mini_player_cubit.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
-import 'package:spotify/presentation/song_player/pages/song_player.dart';
-import 'package:spotify/presentation/splash/pages/splash.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:spotify/presentation/favorite/bloc/favorite_song_cubit.dart'; // <-- Thêm dòng này
 import 'package:spotify/service_locator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
+import 'package:spotify/presentation/splash/pages/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +42,8 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
-    BlocProvider<SongPlayerCubit>(create: (_) => SongPlayerCubit()),
+        BlocProvider<SongPlayerCubit>(create: (_) => SongPlayerCubit()),
+        BlocProvider<FavoriteSongCubit>(create: (_) => FavoriteSongCubit()..getFavoriteSongs()), // <-- Thêm vào đây
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, mode) => MaterialApp(
@@ -53,7 +51,7 @@ class MainApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           debugShowCheckedModeBanner: false,
-          home: const MainScreen(),
+          home: const SplashPage(),  // <-- luôn bắt đầu từ SplashPage!
         ),
       ),
     );

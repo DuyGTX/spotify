@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spotify/presentation/dashboard/custom_bottom_nav_bar.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
+import 'package:spotify/presentation/library/page/library_page.dart';
+import 'package:spotify/presentation/profile/profile_page.dart';
 import 'package:spotify/presentation/search/pages/search_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,8 +18,8 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     const HomePage(),
     const SearchPage(),
-    Placeholder(),
-    Placeholder(),
+    const LibraryPage(),
+    const ProfilePage(),
   ];
 
 

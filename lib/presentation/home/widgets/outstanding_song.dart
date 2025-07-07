@@ -24,7 +24,11 @@ class Outstanding extends StatelessWidget {
         child: BlocBuilder<OutstandingSongCubit, OutstandingSongState>(
           builder: (context, state) {
             if (state is OutstandingSongLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                ),
+              );
             }
             if (state is OutstandingSongLoaded) {
               return _songs(context, state.songs);

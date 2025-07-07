@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
+import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/data/models/auth/create_user_req.dart';
 import 'package:spotify/domain/usecases/auth/signup.dart';
 import 'package:spotify/presentation/auth/pages/signin.dart';
@@ -34,9 +37,9 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       bottomNavigationBar: _signinText(context),
       appBar: BasicAppbar(
-        title: Image.asset(
-          AppImages.logo,
-          height: 40,
+        title: SvgPicture.asset(
+          context.isDarkMode ? AppVectors.logo_dark : AppVectors.logo_light,     
+          height: 30,
           width: 150,
         ),
       ),
@@ -221,7 +224,7 @@ class _SignupPageState extends State<SignupPage> {
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 16,
-              color: Color(0xFF288CE9), 
+              color: AppColors.primary, 
             ),
           ),
         ),

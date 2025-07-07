@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/usecases/song/get_trending.dart';
 import 'package:spotify/presentation/home/bloc/trending_song_cubit.dart';
 import 'package:spotify/presentation/home/bloc/trending_song_state.dart';
@@ -18,7 +19,7 @@ class TrendingSong extends StatelessWidget {
       child: BlocBuilder<TrendingSongCubit, TrendingSongState>(
         builder: (context, state) {
           if (state is TrendingSongLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: AppColors.primary,));
           }
           if (state is TrendingSongLoaded) {
             return _buildPagedGrid(context, state.songs);

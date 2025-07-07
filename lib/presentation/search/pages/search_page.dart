@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/data/sources/search/search_history_service.dart';
 import 'package:spotify/data/sources/search/search_service.dart';
 import 'package:spotify/domain/entities/song/song.dart';
@@ -169,7 +170,7 @@ class _SearchViewState extends State<_SearchView> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.orange : (isDarkMode ? Colors.grey[800] : Colors.grey[300]),
+          color: isSelected ? AppColors.primary : (isDarkMode ? Colors.grey[800] : Colors.grey[300]),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -200,18 +201,11 @@ class _SearchViewState extends State<_SearchView> {
 
   Widget _buildGenreMoodGrid(bool isDarkMode) {
     final genres = [
-      {'name': 'Pop', 'color': Colors.green[700]},
-      {'name': 'Tình yêu', 'color': Colors.pink[700]},
-      {'name': 'Tiệc tùng', 'color': Colors.red[700]},
-      {'name': 'Afrosounds', 'color': Colors.green[800]},
-      {'name': 'Buồn', 'color': Colors.blue[900]},
-      {'name': 'Mùa hè', 'color': Colors.orange[300]},
-      {'name': 'Ca-ri-bê', 'color': Colors.blue[700]},
-      {'name': 'Thể thao', 'color': Colors.brown[700]},
-      {'name': 'Phai nhạt', 'color': Colors.purple[700]},
-      {'name': 'Hip-Hop', 'color': Colors.blue[800]},
-      {'name': 'Thư giãn', 'color': Colors.grey[700]},
-      {'name': 'Cảm hứng', 'color': Colors.green[900]},
+      {'name': 'Nhạc Việt', 'color': Colors.green[700]},
+      {'name': 'Hip-Hop', 'color': Colors.pink[700]},
+      {'name': 'Tâm trạng', 'color': Colors.red[700]},
+      {'name': 'Remix', 'color': Colors.green[800]},
+      
     ];
 
     return Container(
@@ -335,7 +329,7 @@ class _SearchViewState extends State<_SearchView> {
     return Container(
       color: isDarkMode ? Colors.black : Colors.white,
       child: state.isLoading
-          ? Center(child: CircularProgressIndicator(color: Colors.orange))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary))
           : ListView(
               children: [
                 // Artists section
@@ -459,24 +453,24 @@ class _SearchViewState extends State<_SearchView> {
                             style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
                           ),
                             onTap: () {
-    final song = SongEntity.fromMap(s);
-    final allSongEntities = state.foundSongs.map((ss) => SongEntity.fromMap(ss)).toList();
-    final index = allSongEntities.indexWhere((e) => e.id == song.id);
+                            final song = SongEntity.fromMap(s);
+                            final allSongEntities = state.foundSongs.map((ss) => SongEntity.fromMap(ss)).toList();
+                            final index = allSongEntities.indexWhere((e) => e.id == song.id);
 
-    // GỌI loadSong TẠI ĐÂY (trước khi mở SongPlayerPage)
-    context.read<SongPlayerCubit>().loadSong(song.songUrl, song, allSongEntities, index);
+                            // GỌI loadSong TẠI ĐÂY (trước khi mở SongPlayerPage)
+                            context.read<SongPlayerCubit>().loadSong(song.songUrl, song, allSongEntities, index);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => SongPlayerPage(
-          songEntity: song,
-          allSongs: allSongEntities,
-          currentIndex: index,
-        ),
-      ),
-    );
-  },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SongPlayerPage(
+                                  songEntity: song,
+                                  allSongs: allSongEntities,
+                                  currentIndex: index,
+                                ),
+                              ),
+                            );
+                          },
                           // Bạn có thể bổ sung subtitle, onTap, v.v. tại đây
                         )),
                   ],

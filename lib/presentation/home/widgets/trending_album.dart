@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/album/album.dart';
 import 'package:spotify/domain/usecases/song/get_trending_album.dart';
 import 'package:spotify/presentation/album/page/album_detail.dart';
@@ -18,7 +19,7 @@ class TrendingAlbum extends StatelessWidget {
       child: BlocBuilder<TrendingAlbumCubit, TrendingAlbumState>(
         builder: (context, state) {
           if (state is TrendingAlbumLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator(color: AppColors.primary,));
           } else if (state is TrendingAlbumLoaded) {
             return _buildAlbumList(context, state.albums);
           } else if (state is TrendingAlbumError) {

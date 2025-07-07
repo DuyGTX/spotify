@@ -14,4 +14,7 @@ class AppVectors {
   static const String home_bottom_off = '${basePath}home_bottom_off$format';
   static const String profile= '${basePath}profile$format';
   static const String profile_off= '${basePath}profile_off$format';
+  static const String logo_loading= '${basePath}logo_wave_loading$format';
+  static const String logo_light= '${basePath}logo_wave_light$format';
+  static const String logo_dark= '${basePath}logo_wave_dark$format';
 }

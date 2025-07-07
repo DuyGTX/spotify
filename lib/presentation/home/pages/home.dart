@@ -9,6 +9,7 @@ import 'package:spotify/presentation/dashboard/custom_bottom_nav_bar.dart';
 import 'package:spotify/presentation/home/widgets/outstanding_song.dart';
 import 'package:spotify/presentation/home/widgets/trending_album.dart';
 import 'package:spotify/presentation/home/widgets/trending_song.dart';
+import 'package:spotify/presentation/setting/page/setting.dart';
 import 'package:spotify/presentation/song_player/pages/mini_player_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,12 +49,29 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         backgroundColor: context.isDarkMode ? Colors.black : Colors.white,
         appBar: BasicAppbar(
           hideBack: true,
-          title: Image.asset(
-            AppImages.logo,
-            height: 40,
+          title: SvgPicture.asset(
+            context.isDarkMode ? AppVectors.logo_dark : AppVectors.logo_light,
+            height: 30,
             width: 150,
           ),
+          action: Padding(
+            padding: const EdgeInsets.only(right: 12), // Đẩy icon sang trái
+            child: IconButton(
+              icon: const Icon(Icons.settings),
+              tooltip: 'Cài đặt',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
+
+
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -165,7 +183,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         TrendingAlbum(),
 
 
-        SizedBox(height: 32),
+        SizedBox(height: 20),
       ],
     ),
   );
@@ -174,12 +192,65 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   // Tab "Nhạc"
   Widget _tabMusic() {
-    return const Center(child: Text('Nội dung Nhạc'));
+    return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        SizedBox(height: 16),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Được đề xuất cho hôm nay',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
+          ),
+        ),
+
+        Outstanding(),
+
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
+          child: Text(
+            'Bài hát thịnh hành',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+          ),
+        ),
+
+        TrendingSong(),
+
+        
+
+
+        SizedBox(height: 20),
+      ],
+    ),
+  );
   }
 
   // Tab "Albums"
   Widget _tabAlbums() {
-    return const Center(child: Text('Nội dung Albums'));
+    return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        SizedBox(height: 16),
+
+        
+
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
+          child: Text(
+            'Album thịnh hành',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+          ),
+        ),
+        TrendingAlbum(),
+
+
+        SizedBox(height: 30),
+      ],
+    ),
+  );
   }
 
   // Tab "Podcasts"

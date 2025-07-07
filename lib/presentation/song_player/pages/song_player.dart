@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/song/song.dart';
+import 'package:spotify/presentation/favorite/bloc/favorite_song_cubit.dart';
+import 'package:spotify/presentation/favorite/bloc/favorite_song_state.dart';
 import 'package:spotify/presentation/lyrics/lyrics_page.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_state.dart';
@@ -91,6 +94,9 @@ class SongPlayerPage extends StatelessWidget {
   }
 
   Widget _songDetail(BuildContext context, SongEntity song) {
+    // Gọi checkIsFavorite khi vào UI
+    context.read<FavoriteSongCubit>().checkIsFavorite(song.id);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -108,13 +114,26 @@ class SongPlayerPage extends StatelessWidget {
             ),
           ],
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.favorite_outline_outlined, size: 30, color: AppColors.darkGrey),
-        )
+        BlocBuilder<FavoriteSongCubit, FavoriteSongState>(
+          builder: (context, state) {
+            final favoriteCubit = context.read<FavoriteSongCubit>();
+            final isFavorite = favoriteCubit.isFavoriteInCache(song.id);
+
+            return IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? AppColors.primary : Colors.grey,
+              ),
+              onPressed: () {
+                favoriteCubit.toggleFavorite(song.id);
+              },
+            );
+          },
+        ),
       ],
     );
   }
+
 
   Widget _songPlayer(BuildContext context) {
     return BlocBuilder<SongPlayerCubit, SongPlayerState>(
@@ -123,7 +142,9 @@ class SongPlayerPage extends StatelessWidget {
         final duration = cubit.songDuration;
         final position = cubit.songPosition;
 
-        const progressColor = Color(0xFF434343);
+        // Sử dụng Theme.of(context) để lấy mode hiện tại
+        final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+        final progressColor = isDarkMode ? Colors.white : Colors.black;
 
         return Column(
           children: [
@@ -150,8 +171,14 @@ class SongPlayerPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(formatDuration(position), style: const TextStyle(fontSize: 12, color: progressColor)),
-                Text(formatDuration(duration), style: const TextStyle(fontSize: 12, color: progressColor)),
+                Text(
+                  formatDuration(position),
+                  style: TextStyle(fontSize: 12, color: progressColor),
+                ),
+                Text(
+                  formatDuration(duration),
+                  style: TextStyle(fontSize: 12, color: progressColor),
+                ),
               ],
             ),
           ],
@@ -159,6 +186,7 @@ class SongPlayerPage extends StatelessWidget {
       },
     );
   }
+
 
   Widget _playControls(BuildContext context) {
     return BlocBuilder<SongPlayerCubit, SongPlayerState>(
